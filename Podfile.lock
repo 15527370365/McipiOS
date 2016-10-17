@@ -1,0 +1,34 @@
+PODS:
+  - Alamofire (3.5.0)
+  - Kingfisher (2.6.0)
+  - SwiftValidator (3.0.1)
+  - SwiftyJSON (2.3.2)
+  - Timepiece (0.4.2)
+
+DEPENDENCIES:
+  - Alamofire (~> 3.5.0)
+  - Kingfisher (~> 2.6.0)
+  - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, tag `4.0.0`)
+  - SwiftyJSON (~> 2.3.0)
+  - Timepiece (~> 0.4.2)
+
+EXTERNAL SOURCES:
+  SwiftValidator:
+    :git: https://github.com/jpotts18/SwiftValidator.git
+    :tag: 4.0.0
+
+CHECKOUT OPTIONS:
+  SwiftValidator:
+    :git: https://github.com/jpotts18/SwiftValidator.git
+    :tag: 4.0.0
+
+SPEC CHECKSUMS:
+  Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
+  Kingfisher: d84c5fd176ea86cc7b8aac65fd55feda6f70f130
+  SwiftValidator: 461a2c00173f001287a8fa1f12704b87ec8a6bc4
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  Timepiece: cf53bb908bf542acc0e3d5f69cabfed869df4ebd
+
+PODFILE CHECKSUM: dd1a530673c9a952daa7156fe40755202036afae
+
+COCOAPODS: 1.0.1

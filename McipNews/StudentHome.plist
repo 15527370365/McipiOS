@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>mintroduce</key>
+		<string>ifanr爱范儿订阅源</string>
+		<key>mname</key>
+		<string>学子家园</string>
+		<key>moduleid</key>
+		<integer>1</integer>
+		<key>mfixed</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>mintroduce</key>
+		<string>ifanr爱范儿订阅源</string>
+		<key>mname</key>
+		<string>教务部</string>
+		<key>moduleid</key>
+		<integer>1</integer>
+		<key>mfixed</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>mintroduce</key>
+		<string>信息与安全工程学院</string>
+		<key>mname</key>
+		<string>信息与安全工程学院</string>
+		<key>moduleid</key>
+		<integer>1</integer>
+		<key>mfixed</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>mintroduce</key>
+		<string>中南财经政法大学</string>
+		<key>mname</key>
+		<string>中南财经政法大学</string>
+		<key>moduleid</key>
+		<integer>1</integer>
+		<key>mfixed</key>
+		<integer>0</integer>
+	</dict>
+</array>
+</plist>

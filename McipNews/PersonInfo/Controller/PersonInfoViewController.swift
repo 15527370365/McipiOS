@@ -22,6 +22,7 @@ class PersonInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hidesBottomBarWhenPushed = true
+        userImage.layer.layoutIfNeeded()
         userImage.layer.masksToBounds = true
         userImage.layer.cornerRadius = userImage.bounds.size.width * 0.5
         userImage.layer.borderWidth = 2
@@ -34,6 +35,7 @@ class PersonInfoViewController: UIViewController {
             self.userImage.image = UIImage(data: NSData(base64EncodedString: image, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)
         }else{
             self.userImage.image = UIImage(named: "default_user_image")
+            print(UIImage(named: "default_user_image"))
         }
         self.loadData()
     }

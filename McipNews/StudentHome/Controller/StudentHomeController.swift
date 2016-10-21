@@ -88,6 +88,7 @@ class StudentHomeController: PageController {
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: ButtonTool.setNavigationLeftImageButton(#selector(NoticeViewController.btnUser), view: self))
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

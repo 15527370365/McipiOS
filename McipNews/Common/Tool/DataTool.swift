@@ -37,6 +37,39 @@ struct DataTool {
     static let get        = server+"/rest/get"
     
     static let common     = server + "/common"
+    
+    static func loadWriteTable(completionHandler: ([News],state:Bool) -> Void){
+        let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
+        let parameters = ["":""]
+        //print(parameters)
+        let json = fetchJsonFromNet(server+"/common/getTableInfo", parameters,headers)
+        json.jsonToModel(nil) { result in
+            var news:[News] = []
+            print(result)
+            if result["code"].string=="40000" {
+                //let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
+                //var array:[Channel]
+                for i in 0..<result["data"].count{
+                    //print(data["news"][i]["ntime"].stringValue)
+//                    let comps = CommonFunction.formatTime(data[i]["ntime"].stringValue)
+//                    //let now = CommonFunction.getNowTime()
+//                    //print("\(comps)----\(now)")
+//                    let time = "\(comps.month)-\(comps.day) \(comps.hour):\(comps.minute)"
+                    //print(data["news"][i])
+                    var picture = ""
+                    if  result["data"][i]["npicture"] != nil {
+                        picture = result["data"][i]["npicture"].stringValue
+                    }
+                    let new = News(newsid: result["data"][i]["newsid"].intValue, ntitle: result["data"][i]["ntitle"].stringValue, nfrom: "信息采集", ntime: "", nimage: picture)
+                    //print("\(new.newsid)+\(new.nimage)+\(new.ntime)+\(new.ntitle)+\(new.nfrom)")
+                    news.append(new)
+                }
+                completionHandler(news,state: true)
+            }else{
+                completionHandler(news,state: false)
+            }
+        }
+    }
 
     static func loadNews(moduleid:NSNumber,newsid:NSNumber,type:NSNumber,completionHandler: ([News],state:Bool) -> Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
@@ -48,7 +81,7 @@ struct DataTool {
         }else{
             parameters = ["path":"rpc/get_module_news","data":"{\"_moduleid\":"+moduleid.stringValue+",\"_page\":0}"]
         }
-        print(parameters)
+        //print(parameters)
         let json = fetchJsonFromNet(post, parameters, headers)
         json.jsonToModel(nil) { result in
             var news:[News] = []
@@ -156,7 +189,7 @@ struct DataTool {
         Alamofire.request(.GET, "http://www.weather.com.cn/data/cityinfo/101200101.html" ).response {
             response -> Void in
             let data = JSON(data: response.2!)["weatherinfo"]
-            print(data)
+            //print(data)
 //            if data["errNum"].intValue == 0 {
 //                let retData=data["retData"]
 //                completionHandler(weatherImageName: "weather11",weatherLable: "\(retData["l_tmp"])℃~\(retData["h_tmp"])℃")
@@ -173,7 +206,7 @@ struct DataTool {
         json.jsonToModel(nil) { result in
             var notices:[Notices] = []
             if result["code"].string=="200" {
-                print(result)
+                //print(result)
                 let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
                 //var array:[Channel]
                 for i in 0..<data["mynotice"].count{
@@ -259,7 +292,7 @@ struct DataTool {
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
         let parameters = ["path":"rpc/fun_insert_noticereply","data":"{\"_nrnoticeid\":\(noticeid),\"_nruserid\":\""+nruserid+"\",\"_nrruserids\":null,\"_nreplycontent\":\""+nreplycontent+"\"}"]
 //        {"_nrnoticeid":425, "_nruserid":"1309030411", "_nrruserids":null, "_nreplycontent":"哈哈哈嘻嘻嘻"}
-        print(parameters)
+        //print(parameters)
         let json = fetchJsonFromNet(post, parameters, headers)
         json.jsonToModel(nil) { result in
             if result["code"].string=="200" {
@@ -301,7 +334,7 @@ struct DataTool {
     static func loadModules(type:NSNumber,completionHandler:(followDatas:[Channel],unFollowDatas:[Channel]) -> Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
         let parameters = ["path":"rpc/get_my_modules","data":"{\"_mtype\":\(type),\"_userid\":"+userid+"}"]
-        print(parameters)
+        //print(parameters)
         let json = fetchJsonFromNet(post, parameters, headers)
         json.jsonToModel(nil) { result in
             var follow:[Channel] = []
@@ -333,7 +366,7 @@ struct DataTool {
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
         let parameters = ["path":"modulefollowers","data":"{\"mmoduleid\":\(moduleid),\"muserid\":\""+userid+"\"}"]
         //        {"_nrnoticeid":425, "_nruserid":"1309030411", "_nrruserids":null, "_nreplycontent":"哈哈哈嘻嘻嘻"}
-        print(parameters)
+        //print(parameters)
         let json = fetchJsonFromNet(post, parameters, headers)
         json.jsonToModel(nil) { result in
             if result["code"].string=="201" {
@@ -347,7 +380,7 @@ struct DataTool {
     static func unFollowModule(moduleid:NSNumber,completionHandler:(flag:Bool)->Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
         let parameters = ["path":"modulefollowers?muserid=eq."+userid+"&mmoduleid=eq.\(moduleid)","data":""]
-        print(parameters)
+        //print(parameters)
         let json = fetchJsonFromNet(server+"/rest/delete", parameters, headers)
         json.jsonToModel(nil) { result in
             if result["code"].string=="204" {
@@ -413,10 +446,10 @@ struct DataTool {
     static func makeSureNotice(noticeid:NSNumber,completionHandler:(flag:Bool)->Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
         let parameters = ["path":"noticereceivers?nnoticeid=eq.\(noticeid)&nuserid=eq."+userid+"","data":"{\"nstate\":1}"]
-        print(parameters)
+        //print(parameters)
         let json = fetchJsonFromNet(server+"/rest/patch", parameters, headers)
         json.jsonToModel(nil) { result in
-            print(result)
+            //print(result)
             if result["code"].string=="204" {
                 //let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
                 completionHandler(flag:true)
@@ -431,7 +464,7 @@ struct DataTool {
         let parameters = ["path":"rpc/get_confirm_details","data":"{\"_noticeid\":\(noticeid)}"]
         let json = fetchJsonFromNet(post, parameters, headers)
         json.jsonToModel(nil) { result in
-            print(result)
+            //print(result)
             var userDatas:[User] = []
             if result["code"].string=="200" {
                 let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
@@ -466,7 +499,7 @@ struct DataTool {
         //print(parameters)
         let json = fetchJsonFromNet(server+"/rest/patch", parameters, headers)
         json.jsonToModel(nil) { result in
-            print(result)
+            //print(result)
             if result["code"].string=="204" {
                 //let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
                 completionHandler(flag:true)
@@ -501,7 +534,7 @@ struct DataTool {
             let received = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response)
             //let jsonString = NSString(data: received, encoding: NSUTF8StringEncoding)
             let result=JSON(data: received)
-            print(result)
+            //print(result)
             if result["code"].string=="20000" {
                 return (true)
             }

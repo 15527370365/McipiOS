@@ -19,6 +19,10 @@ class PartySetChildViewController: UIViewController {
             //根据currentPage 和 lastPage的大小关系，控制页面的切换方向
             let sb = UIStoryboard(name: "Main", bundle: nil)
             let vc = sb.instantiateViewControllerWithIdentifier("TableViewController") as! NewsTableViewController
+            if currentPage == 2{
+                vc.flag = true
+            }
+            print("\(currentPage)\(lastPage)")
             if currentPage > lastPage {
                 vc.ch = titles[titleSort[currentPage]]
                 self.pageViewController.setViewControllers([vc], direction: .Forward, animated: true, completion: nil)
@@ -54,6 +58,16 @@ class PartySetChildViewController: UIViewController {
     @IBAction func changePage(sender: UIControl) {
         currentPage = sender.tag - 100
     }
+    @IBAction func starBtnEvent(sender: UIControl) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewControllerWithIdentifier("NewsDetail") as! NewsDetailViewController
+        vc.detailTitle.title = "闪闪红星"
+        vc.flag = true
+        vc.type = 1
+        self.tabBarController?.tabBar.hidden = true
+        self.navigationController?.pushViewController(vc, animated: true)
+        self.hidesBottomBarWhenPushed = false
+    }
     
 
     /*
@@ -75,8 +89,11 @@ extension PartySetChildViewController:UIPageViewControllerDataSource{
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewControllerWithIdentifier("TableViewController") as! NewsTableViewController
         var index = titleIndex[old.ch.mname]! + 1
-        if index == 4 {
+        if index == 3 {
             index = 0
+        }
+        if index == 2 {
+            vc.flag = true
         }
         vc.ch = titles[titleSort[index]]
         return vc
@@ -90,7 +107,10 @@ extension PartySetChildViewController:UIPageViewControllerDataSource{
         let vc = sb.instantiateViewControllerWithIdentifier("TableViewController") as! NewsTableViewController
         var index = titleIndex[old.ch.mname]! - 1
         if index == -1 {
-            index = 3
+            index = 2
+        }
+        if index == 2 {
+            vc.flag = true
         }
         vc.ch = titles[titleSort[index]]
         return vc

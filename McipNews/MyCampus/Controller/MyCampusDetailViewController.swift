@@ -15,7 +15,7 @@ class MyCampusDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self
-        let url = NSURL(string:"http://139.129.21.70"+self.url)
+        let url = NSURL(string:"http://www.wanghongyu.cn"+self.url)
         print(self.url)
         let request : NSMutableURLRequest = NSMutableURLRequest(URL: url!, cachePolicy: NSURLRequestCachePolicy.UseProtocolCachePolicy, timeoutInterval: 10)
         request.HTTPMethod = "GET"//设置请求方式为POST，默认为GET

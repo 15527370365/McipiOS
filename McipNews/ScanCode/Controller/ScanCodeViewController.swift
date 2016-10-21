@@ -9,6 +9,10 @@
 import UIKit
 
 class ScanCodeViewController: LBXScanViewController {
+    
+    // 0 课堂点名
+    // 1 寝室点名
+    var type = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +34,20 @@ class ScanCodeViewController: LBXScanViewController {
 //        }
         let result:LBXScanResult = arrayResult[0]
         print(result.strScanned)
-        DataTool.loadRollCall(result.strScanned!){ (returnResult) -> Void in
-            print(returnResult)
-            let alertController = UIAlertController(title: "提示", message: returnResult.content, preferredStyle: UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
-            alertController.addAction(okAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-//            self.navigationController?.popViewControllerAnimated(true)
+        if self.type == 0 {
+            
+//            DataTool.loadRollCall(result.strScanned!){ (returnResult) -> Void in
+//                print(returnResult)
+//                let alertController = UIAlertController(title: "提示", message: returnResult.content, preferredStyle: UIAlertControllerStyle.Alert)
+//                let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
+//                alertController.addAction(okAction)
+//                self.presentViewController(alertController, animated: true, completion: nil)
+//                //            self.navigationController?.popViewControllerAnimated(true)
+//            }
+        }else{
+            
         }
+        
     }
     
     func setStyle() -> LBXScanViewStyle {

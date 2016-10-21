@@ -38,6 +38,7 @@ class HomeViewController:UIViewController {
         self.navigationItem.titleView = ButtonTool.setNavigationMiddleItem(#selector(HomeViewController.btnUser), view: self, barHeight: barHeight, week: self.week)
         //setNavigationItems()
         weekLabel.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/2));
+        userImage.layer.layoutIfNeeded()
         userImage.layer.masksToBounds = true
         userImage.layer.cornerRadius = userImage.bounds.size.width * 0.5
         userImage.layer.borderWidth = 2

@@ -14,13 +14,27 @@ class NewsDetailViewController: UIViewController {
     @IBOutlet var detailTitle: UINavigationItem!
     @IBOutlet var webView: UIWebView!
     var newsid:NSNumber!
+    var flag = false
+    var type = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.webView.delegate = self
-        let url = NSURL(string:NEWS_DETAIL+"\(newsid)")
-        let request : NSMutableURLRequest = NSMutableURLRequest(URL: url!, cachePolicy: NSURLRequestCachePolicy.UseProtocolCachePolicy, timeoutInterval: 10)
+        var url = NSURL()
+        print(self.flag)
+        if self.flag {
+            if self.type == 0 {
+                url = NSURL(string:server+"/common/writeTable/\(self.newsid)-"+userid)!
+            }else{
+                url = NSURL(string:"http://file.ih5.cn?nid=3333064&key=1505280570&title=5rWL6K.V6aKY4oCU4oCU5Y.Y572R57qi77yf&html5=true&width=640")!
+            }
+            
+        }else{
+            url = NSURL(string:NEWS_DETAIL+"\(newsid)")!
+        }
+        print(url.absoluteURL)
+        let request : NSMutableURLRequest = NSMutableURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.UseProtocolCachePolicy, timeoutInterval: 10)
         
         request.HTTPMethod = "GET"//设置请求方式为POST，默认为GET
         request.addValue(userid, forHTTPHeaderField: "userid")

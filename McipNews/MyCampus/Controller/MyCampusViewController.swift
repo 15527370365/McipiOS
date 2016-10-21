@@ -56,7 +56,7 @@ class MyCampusViewController: UIViewController {
         defaultData.append(ButtonCell(image: "tests.png",title: "考试安排",url: "/mcip/education/showExamSchedule"))
         defaultData.append(ButtonCell(image: "tsgrades.png",title: "本学期成绩",url: "/mcip/education/showThisTermClass"))
         defaultData.append(ButtonCell(image: "allgrades.png",title: "已修成绩",url: "/mcip/education/showLearnedCourse"))
-        //defaultData.append(ButtonCell(image: "dormitory.png",title: "寝室扫码",url: "/mcip/education/"))
+        saveData.append(ButtonCell(image: "dormitory.png",title: "寝室点名",url: ""))
     }
     
     // MARK: - Button Events
@@ -160,7 +160,15 @@ extension MyCampusViewController : UICollectionViewDelegate,UICollectionViewData
 //        self.hidesBottomBarWhenPushed=true
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        self.hidesBottomBarWhenPushed=false
-        self.performSegueWithIdentifier("showDetail", sender: Collection(collectionView: collectionView,indexPath: indexPath))
+        
+        if collectionView.tag == 200 && indexPath.row == 5{
+            let vc = ScanCodeViewController()
+            self.hidesBottomBarWhenPushed=true
+            self.navigationController?.pushViewController(vc, animated: true)
+            self.hidesBottomBarWhenPushed=false
+        }else{
+            self.performSegueWithIdentifier("showDetail", sender: Collection(collectionView: collectionView,indexPath: indexPath))
+        }
     }
     
 }

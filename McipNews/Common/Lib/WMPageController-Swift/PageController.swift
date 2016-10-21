@@ -195,6 +195,10 @@ public class PageController: UIViewController, UIScrollViewDelegate, MenuViewDel
         guard childControllersCount > 0 else { return }
         postFullyDisplayedNotificationWithIndex(_selectedIndex)
         didEnterController(currentViewController!, atIndex: _selectedIndex)
+        //print(self.contentView?.bounds)
+        
+        let rect = CGRectMake((self.contentView?.bounds.origin.x)!, 0.0,(self.contentView?.frame.width)!,(self.contentView?.frame.height)!);
+        self.contentView?.bounds = rect
     }
     
     override public func didReceiveMemoryWarning() {

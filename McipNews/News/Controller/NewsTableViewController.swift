@@ -14,7 +14,7 @@ class NewsTableViewController: UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var ch:Channel!
-    
+    var flag = false
     var newsDatas:[News] = []
     
     override func viewDidLoad() {
@@ -24,6 +24,7 @@ class NewsTableViewController: UIViewController{
         self.tableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self,refreshingAction: #selector(NewsTableViewController.requestInfo))
         self.tableView.mj_header.beginRefreshing()
         tableView.tableFooterView=UIView.init(frame: CGRectZero)
+        print(self.flag)
         // Do any additional setup after loading the view.
     }
 
@@ -40,33 +41,67 @@ class NewsTableViewController: UIViewController{
      */
     func requestInfo() {
         if self.newsDatas.count==0 {
-            DataTool.loadNews((self.ch?.moduleid)!,newsid:0,type:0) { (newsArray) -> Void in
-                self.tableView.mj_header.endRefreshing()
-                if newsArray.state{
-                    self.newsDatas = newsArray.0 + self.newsDatas
-                    if self.newsDatas.count > 10{
-                        self.tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(NewsTableViewController.requestMoreInfo))
+            if self.flag {
+                DataTool.loadWriteTable() { (newsArray) -> Void in
+                    self.tableView.mj_header.endRefreshing()
+                    if newsArray.state{
+                        self.newsDatas = newsArray.0 + self.newsDatas
+                        if self.newsDatas.count > 10{
+                            self.tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(NewsTableViewController.requestMoreInfo))
+                        }
+                        self.tableView.reloadData()
                     }
-                    self.tableView.reloadData()
+                    else{
+                        print("error")
+                        CommonFunction.exit(self)
+                    }
                 }
-                else{
-                    print("error")
-                    CommonFunction.exit(self)
+            }else{
+                DataTool.loadNews((self.ch?.moduleid)!,newsid:0,type:0) { (newsArray) -> Void in
+                    self.tableView.mj_header.endRefreshing()
+                    if newsArray.state{
+                        self.newsDatas = newsArray.0 + self.newsDatas
+                        if self.newsDatas.count > 10{
+                            self.tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(NewsTableViewController.requestMoreInfo))
+                        }
+                        self.tableView.reloadData()
+                    }
+                    else{
+                        print("error")
+                        CommonFunction.exit(self)
+                    }
                 }
             }
         }else{
-            DataTool.loadNews((self.ch?.moduleid)!,newsid:self.newsDatas[0].newsid,type:1) { (newsArray) -> Void in
-                self.tableView.mj_header.endRefreshing()
-                if newsArray.state{
-                    self.newsDatas = newsArray.0 + self.newsDatas
-                    if self.newsDatas.count > 10{
-                        self.tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(NewsTableViewController.requestMoreInfo))
+            if self.flag {
+                DataTool.loadWriteTable() { (newsArray) -> Void in
+                    self.tableView.mj_header.endRefreshing()
+                    if newsArray.state{
+                        self.newsDatas = newsArray.0 + self.newsDatas
+                        if self.newsDatas.count > 10{
+                            self.tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(NewsTableViewController.requestMoreInfo))
+                        }
+                        self.tableView.reloadData()
                     }
-                    self.tableView.reloadData()
+                    else{
+                        print("error")
+                        CommonFunction.exit(self)
+                    }
                 }
-                else{
-                    print("error")
-                    CommonFunction.exit(self)
+            }else{
+                DataTool.loadNews((self.ch?.moduleid)!,newsid:self.newsDatas[0].newsid,type:1) { (newsArray) -> Void in
+                    self.tableView.mj_header.endRefreshing()
+                    if newsArray.state{
+                        self.newsDatas = newsArray.0 + self.newsDatas
+                        if self.newsDatas.count > 10{
+                            self.tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(NewsTableViewController.requestMoreInfo))
+                        }
+                        self.tableView.reloadData()
+                    }
+                    else{
+                        print("error")
+                        CommonFunction.exit(self)
+                    }
                 }
             }
         }
@@ -76,17 +111,32 @@ class NewsTableViewController: UIViewController{
      上拉刷新，加载更多数据
      */
     func requestMoreInfo() {
-        DataTool.loadNews((self.ch?.moduleid)!,newsid:self.newsDatas[self.newsDatas.count-1].newsid,type: 2) { (newsArray) -> Void in
-            self.tableView.mj_footer.endRefreshing()
-            if newsArray.state{
-                self.newsDatas += newsArray.0
-                //self.page=newPage
-                self.tableView.reloadData()
-            }else{
-                print("error")
-                CommonFunction.exit(self)
+        if flag {
+            DataTool.loadWriteTable() { (newsArray) -> Void in
+                self.tableView.mj_footer.endRefreshing()
+                if newsArray.state{
+                    self.newsDatas += newsArray.0
+                    //self.page=newPage
+                    self.tableView.reloadData()
+                }else{
+                    print("error")
+                    CommonFunction.exit(self)
+                }
+            }
+        }else{
+            DataTool.loadNews((self.ch?.moduleid)!,newsid:self.newsDatas[self.newsDatas.count-1].newsid,type: 2) { (newsArray) -> Void in
+                self.tableView.mj_footer.endRefreshing()
+                if newsArray.state{
+                    self.newsDatas += newsArray.0
+                    //self.page=newPage
+                    self.tableView.reloadData()
+                }else{
+                    print("error")
+                    CommonFunction.exit(self)
+                }
             }
         }
+        
     }
 
     /*
@@ -134,6 +184,9 @@ extension NewsTableViewController:UITableViewDelegate,UITableViewDataSource{
         let vc = sb.instantiateViewControllerWithIdentifier("NewsDetail") as! NewsDetailViewController
         vc.detailTitle.title = ch.mname
         vc.newsid = newsDatas[indexPath.row].newsid
+        if ch.mname == "信息采集" {
+            vc.flag = true
+        }
         self.navigationController?.pushViewController(vc, animated: true)
         self.hidesBottomBarWhenPushed = false
     }

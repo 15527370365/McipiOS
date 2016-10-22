@@ -16,6 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         print("didFinishLaunchingWithOptions")
+        //MARK: - FaceDetect settings
+//        //创建语音配置,appid必须要传入，仅执行一次则可
+//        let initString:String = "appid=57899eda";
+//        //所有服务启动前，需要确保执行createUtility
+//        IFlySpeechUtility.createUtility(initString);
         //MARK: - BPush settings
         let Types = UIUserNotificationType([.Sound,.Alert, .Badge])
         let settings = UIUserNotificationSettings(forTypes: Types, categories: nil)
@@ -49,6 +54,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 userid=user.userid!
                 token=user.token!
                 image = user.image!
+                if let id = user.faceid{
+                    faceid = id
+                }
+                
             }
             if results?.count != 0 {
                 if token != "" && !DataTool.checkToken() {
@@ -61,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     self.window?.rootViewController=storyboard.instantiateViewControllerWithIdentifier("MainTabBar")
                     NSLog("token:%@", token)
+                    print("faceid"+faceid)
                 }
             }
         }catch{

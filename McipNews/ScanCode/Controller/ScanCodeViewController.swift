@@ -34,17 +34,40 @@ class ScanCodeViewController: LBXScanViewController {
 //        }
         let result:LBXScanResult = arrayResult[0]
         print(result.strScanned)
+        let strArr = result.strScanned!.componentsSeparatedByString("#")
         if self.type == 0 {
-            
-//            DataTool.loadRollCall(result.strScanned!){ (returnResult) -> Void in
-//                print(returnResult)
-//                let alertController = UIAlertController(title: "提示", message: returnResult.content, preferredStyle: UIAlertControllerStyle.Alert)
-//                let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
-//                alertController.addAction(okAction)
-//                self.presentViewController(alertController, animated: true, completion: nil)
-//                //            self.navigationController?.popViewControllerAnimated(true)
-//            }
+            DataTool.loadRollCall(result.strScanned!){ (returnResult) -> Void in
+                print(returnResult)
+                if returnResult.flag && strArr[2] == "1"{
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewControllerWithIdentifier("verify") as! VerifyViewController
+                    vc.rcid = strArr[0]
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else{
+                    let alertController = UIAlertController(title: "提示", message: returnResult.content, preferredStyle: UIAlertControllerStyle.Alert)
+                    let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
+                    alertController.addAction(okAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+                //            self.navigationController?.popViewControllerAnimated(true)
+            }
         }else{
+            DataTool.loadDormitoryRollcall(result.strScanned!){ (returnResult) -> Void in
+                print(returnResult)
+                if returnResult.flag{
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewControllerWithIdentifier("verify") as! VerifyViewController
+                    vc.type = 1
+                    vc.rcid = returnResult.did
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }else{
+                    let alertController = UIAlertController(title: "提示", message: returnResult.content, preferredStyle: UIAlertControllerStyle.Alert)
+                    let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
+                    alertController.addAction(okAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+                //            self.navigationController?.popViewControllerAnimated(true)
+            }
             
         }
         

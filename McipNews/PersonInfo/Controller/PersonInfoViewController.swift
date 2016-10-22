@@ -60,8 +60,12 @@ class PersonInfoViewController: UIViewController {
             }
             self.detailLabel.text = sex
             if self.person.ubirthday.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0{
-                let year = Int (self.person.ubirthday.substringToIndex(self.person.ubirthday.startIndex.advancedBy(5)))
-                self.detailLabel.text = self.detailLabel.text! + " \(CommonFunction.getNowTime().year - year!)岁"
+                if let year = Int (self.person.ubirthday.substringToIndex(self.person.ubirthday.startIndex.advancedBy(5))){
+                    self.detailLabel.text = self.detailLabel.text! + " \(CommonFunction.getNowTime().year - year)岁"
+                }else{
+                    self.detailLabel.text = self.detailLabel.text! + " 0岁"
+                }
+                
             }
             if self.person.uprovince.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0 {
                 self.detailLabel.text = self.detailLabel.text! + " " + self.person.uprovince

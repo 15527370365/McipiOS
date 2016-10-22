@@ -405,7 +405,7 @@ struct DataTool {
                 case "10001":
                     content = "token与userid不匹配"
                 case "10002":
-                    content = "cheader中没有token或者没有userid信息"
+                    content = "header中没有token或者没有userid信息"
                 case "60000":
                     content = "点名成功"
                 case "60001":
@@ -424,6 +424,87 @@ struct DataTool {
                     content = "未完成人脸采集"
                 default:
                     content = "二维码无效"
+            }
+            completionHandler(flag: flag,content: content)
+        }
+    }
+    
+    static func loadVerifyFace(rcid:String,completionHandler:(flag:Bool,content:String)->Void){
+        let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
+        let parameters = ["rcid":rcid]
+        //print(parameters)
+        let json = fetchJsonFromNet(server+"/rollcall/verifyFace", parameters, headers)
+        json.jsonToModel(nil) { result in
+            var content = ""
+            var flag = false
+            switch result["code"].stringValue{
+            case "10000":
+                content = "在radis中找不到该token"
+            case "10001":
+                content = "token与userid不匹配"
+            case "10002":
+                content = "header中没有token或者没有userid信息"
+            case "60000":
+                content = "点名成功"
+                flag = true
+            case "60005":
+                content = "更新用户信息时出错"
+            default:
+                content = "二维码无效"
+            }
+            completionHandler(flag: flag,content: content)
+        }
+    }
+    
+    static func loadDormitoryRollcall(info:String,completionHandler:(flag:Bool,content:String,did:String)->Void){
+        let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
+        let parameters = ["info":info,"time":"\(Int(NSDate().timeIntervalSince1970*1000))"]
+        print(Int(NSDate().timeIntervalSince1970*1000))
+        print(parameters)
+        let json = fetchJsonFromNet(server+"/rollcall/dormitoryRollcall", parameters, headers)
+        json.jsonToModel(nil) { result in
+            print(result)
+            var content = ""
+            var flag = false
+            switch result["msg"].stringValue{
+            case "10000":
+                content = "签到成功"
+                flag = true
+            case "10001":
+                content = "扫码超时"
+            case "10002":
+                content = "设备中未找到用户信息"
+            case "10003":
+                content = "未找到二维码中的信息"
+            default:
+                content = "二维码无效"
+            }
+            completionHandler(flag: flag,content: content,did: result["data"].stringValue)
+        }
+    }
+    
+    static func loadVerifyFaceDormitory(rcid:String,completionHandler:(flag:Bool,content:String)->Void){
+        let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
+        let parameters = ["did":rcid]
+        //print(parameters)
+        let json = fetchJsonFromNet(server+"/rollcall/verifyFaceDormitory", parameters, headers)
+        json.jsonToModel(nil) { result in
+            var content = ""
+            var flag = false
+            switch result["code"].stringValue{
+            case "10000":
+                content = "在radis中找不到该token"
+            case "10001":
+                content = "token与userid不匹配"
+            case "10002":
+                content = "header中没有token或者没有userid信息"
+            case "60000":
+                content = "点名成功"
+                flag = true
+            case "60005":
+                content = "更新用户信息时出错"
+            default:
+                content = "二维码无效"
             }
             completionHandler(flag: flag,content: content)
         }

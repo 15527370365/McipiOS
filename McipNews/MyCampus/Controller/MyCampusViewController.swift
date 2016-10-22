@@ -163,6 +163,7 @@ extension MyCampusViewController : UICollectionViewDelegate,UICollectionViewData
         
         if collectionView.tag == 200 && indexPath.row == 5{
             let vc = ScanCodeViewController()
+            vc.type = 1
             self.hidesBottomBarWhenPushed=true
             self.navigationController?.pushViewController(vc, animated: true)
             self.hidesBottomBarWhenPushed=false

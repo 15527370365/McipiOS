@@ -19,4 +19,5 @@ extension Users {
     @NSManaged var token: String?
     @NSManaged var userid: String?
     @NSManaged var image:String?
+    @NSManaged var faceid: String?
 }

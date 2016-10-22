@@ -33,6 +33,7 @@ let defautImage = "defaultImage"
 var userid:String=""
 var token:String=""
 var image:String=""
+var faceid:String=""
 
 var firstWeekTime="2015-03-14 13:14:00"
 

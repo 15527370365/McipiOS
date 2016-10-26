@@ -72,7 +72,7 @@ class HomeViewController:UIViewController {
             weekLabel.text = "Sat"
         }
         DataTool.loadWeather(){ result -> Void in
-            print()
+            //print()
             let n1 = (result.weatherImageName1 as NSString).substringWithRange(NSMakeRange(1, 1))
             let n2 = (result.weatherImageName2 as NSString).substringWithRange(NSMakeRange(1, 1))
             if n1 == n2{
@@ -185,7 +185,7 @@ extension HomeViewController:UITableViewDataSource,UITableViewDelegate{
             let news = cellModel.data as! News
             title.text = news.ntitle
             from.text = "来自："+news.nfrom
-            print(news.nimage)
+            //print(news.nimage)
             image.kf_setImageWithURL(NSURL(string: news.nimage)!,placeholderImage: UIImage(named: defautImage))
             time.text=news.ntime
             return cell

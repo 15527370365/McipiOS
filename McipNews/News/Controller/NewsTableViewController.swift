@@ -24,7 +24,7 @@ class NewsTableViewController: UIViewController{
         self.tableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self,refreshingAction: #selector(NewsTableViewController.requestInfo))
         self.tableView.mj_header.beginRefreshing()
         tableView.tableFooterView=UIView.init(frame: CGRectZero)
-        print(self.flag)
+        //print(self.flag)
         // Do any additional setup after loading the view.
     }
 

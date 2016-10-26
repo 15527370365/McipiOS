@@ -52,16 +52,22 @@ class ScanCodeViewController: LBXScanViewController {
                 //            self.navigationController?.popViewControllerAnimated(true)
             }
         }else{
-            DataTool.loadDormitoryRollcall(result.strScanned!){ (returnResult) -> Void in
-                print(returnResult)
-                if returnResult.flag{
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let vc = storyboard.instantiateViewControllerWithIdentifier("verify") as! VerifyViewController
-                    vc.type = 1
-                    vc.rcid = returnResult.did
-                    self.navigationController?.pushViewController(vc, animated: true)
+            DataTool.loadDormitoryRollcall(result.strScanned!){ (returnResult1) -> Void in
+                print(returnResult1)
+                if returnResult1.flag{
+//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let vc = storyboard.instantiateViewControllerWithIdentifier("verify") as! VerifyViewController
+//                    vc.type = 1
+//                    vc.rcid = returnResult.did
+//                    self.navigationController?.pushViewController(vc, animated: true)
+                    DataTool.loadVerifyFaceDormitory(returnResult1.did){ (returnResult2) -> Void in
+                        let alertController = UIAlertController(title: "提示", message: returnResult2.content, preferredStyle: UIAlertControllerStyle.Alert)
+                        let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
+                        alertController.addAction(okAction)
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
                 }else{
-                    let alertController = UIAlertController(title: "提示", message: returnResult.content, preferredStyle: UIAlertControllerStyle.Alert)
+                    let alertController = UIAlertController(title: "提示", message: returnResult1.content, preferredStyle: UIAlertControllerStyle.Alert)
                     let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
                     alertController.addAction(okAction)
                     self.presentViewController(alertController, animated: true, completion: nil)

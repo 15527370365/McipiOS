@@ -112,8 +112,14 @@ extension NoticeConfirmDetailViewController:UITableViewDelegate,UITableViewDataS
         let userImage = cell.viewWithTag(101) as! UIImageView
         if user.upic.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0 {
             userImage.image = UIImage(data: NSData(base64EncodedString: user.upic, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)
+            userImage.layer.layoutIfNeeded()
+            userImage.layer.masksToBounds = true
+            userImage.layer.cornerRadius = userImage.bounds.size.width * 0.5
         }else{
             userImage.image = UIImage(named: "default_user_image")
+            userImage.layer.layoutIfNeeded()
+            userImage.layer.masksToBounds = true
+            userImage.layer.cornerRadius = userImage.bounds.size.width * 0.5
         }
         let name = cell.viewWithTag(102) as! UILabel
         name.text = user.uname

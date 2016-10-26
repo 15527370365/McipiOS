@@ -74,10 +74,14 @@ class NoticeViewController: UIViewController {
     }
     
     @IBAction func codeBtnEvent(sender: UIBarButtonItem) {
-        let vc = ScanCodeViewController()
-        self.hidesBottomBarWhenPushed=true
+//        let vc = ScanCodeViewController()
+//        self.hidesBottomBarWhenPushed=true
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        self.hidesBottomBarWhenPushed=false
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("verify") as! VerifyViewController
+        //vc.rcid = strArr[0]
         self.navigationController?.pushViewController(vc, animated: true)
-        self.hidesBottomBarWhenPushed=false
     }
     
     
@@ -255,8 +259,14 @@ extension NoticeViewController:UITableViewDelegate,UITableViewDataSource{
         let pic = cell.viewWithTag(100) as! UIImageView
         if notices.upic.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0 {
             pic.image = UIImage(data: NSData(base64EncodedString: notices.upic, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)
+            pic.layer.layoutIfNeeded()
+            pic.layer.masksToBounds = true
+            pic.layer.cornerRadius = pic.bounds.size.width * 0.5
         }else{
             pic.image = UIImage(named: "default_user_image")
+            pic.layer.layoutIfNeeded()
+            pic.layer.masksToBounds = true
+            pic.layer.cornerRadius = pic.bounds.size.width * 0.5
         }
         return cell
     }

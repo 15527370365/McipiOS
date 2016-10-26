@@ -14,8 +14,9 @@ class ButtonTool: NSObject {
         let left = UIButton(type:UIButtonType.Custom)
         left.tag = 500
         left.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+        //print(image)
         if image.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0 {
-            left.setImage(UIImage(data: NSData(base64EncodedString: image, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!), forState: UIControlState.Normal)
+            left.setImage(UIImage(data: NSData(base64EncodedString: image, options: NSDataBase64DecodingOptions(rawValue: 0))!), forState: UIControlState.Normal)
         }else{
             left.setImage(UIImage(named: "default_user_image"), forState: UIControlState.Normal)
         }

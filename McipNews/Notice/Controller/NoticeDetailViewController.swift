@@ -29,6 +29,7 @@ class NoticeDetailViewController: UIViewController {
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!
     override func viewDidLoad() {
+        print(self.notices.noticeid)
         super.viewDidLoad()
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -76,6 +77,9 @@ class NoticeDetailViewController: UIViewController {
         self.nameLabel.text = self.notices.uname
         self.timeLabel.text = self.notices.nsendtime
         self.contentLabel.text = self.notices.ncontent
+        userImageButton.layer.layoutIfNeeded()
+        userImageButton.layer.masksToBounds = true
+        userImageButton.layer.cornerRadius = userImageButton.bounds.size.width * 0.5
         if notices.upic.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0 {
             self.userImageButton.setImage(UIImage(data: NSData(base64EncodedString: notices.upic, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!), forState: .Normal)
         }else{
@@ -89,10 +93,26 @@ class NoticeDetailViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     @IBAction func addSchduleBtnEvent(sender: UIControl) {
-        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.bezelView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        hud.label.text = "Loading"
+        DataTool.setSchedule(self.notices.noticeid){ (result) -> Void in
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
+            if result{
+                let alertController = UIAlertController(title: "提示", message: "日程成功", preferredStyle: UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }else{
+                let alertController = UIAlertController(title: "提示", message: "请稍后再试！", preferredStyle: UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        }
     }
 //    @IBAction func showPersonBtnEvent(sender: UIButton) {
-//        
+//
 //    }
     
     @IBAction func sendButtonEvent(sender: UIButton) {
@@ -241,9 +261,16 @@ extension NoticeDetailViewController:UITableViewDelegate,UITableViewDataSource{
         let reply = replyDatas[indexPath.row]
         let image = cell.viewWithTag(101) as! UIButton
         if reply.upic.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0 {
-            image.setImage(UIImage(data: NSData(base64EncodedString: notices.upic, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!), forState: .Normal)
+            //print(reply.upic)
+            image.setImage(UIImage(data: NSData(base64EncodedString: reply.upic, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!), forState: .Normal)
+            image.layer.layoutIfNeeded()
+            image.layer.masksToBounds = true
+            image.layer.cornerRadius = image.bounds.size.width * 0.5
         }else{
             image.setImage(UIImage(named: "default_user_image"), forState: .Normal)
+            image.layer.layoutIfNeeded()
+            image.layer.masksToBounds = true
+            image.layer.cornerRadius = image.bounds.size.width * 0.5
         }
         let name = cell.viewWithTag(102) as! UILabel
         name.text = reply.uname

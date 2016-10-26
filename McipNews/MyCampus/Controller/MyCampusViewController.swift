@@ -161,14 +161,25 @@ extension MyCampusViewController : UICollectionViewDelegate,UICollectionViewData
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        self.hidesBottomBarWhenPushed=false
         
-        if collectionView.tag == 200 && indexPath.row == 5{
-            let vc = ScanCodeViewController()
-            vc.type = 1
-            self.hidesBottomBarWhenPushed=true
-            self.navigationController?.pushViewController(vc, animated: true)
-            self.hidesBottomBarWhenPushed=false
+        if faceid == ""{
+            let alertController = UIAlertController(title: "提示", message: "您当前并未进行人脸信息采集，请前往左上角的个人中心进行人脸信息采集", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
         }else{
-            self.performSegueWithIdentifier("showDetail", sender: Collection(collectionView: collectionView,indexPath: indexPath))
+            if collectionView.tag == 200 && indexPath.row == 5{
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewControllerWithIdentifier("verify") as! VerifyViewController
+                vc.type = 1
+                //vc.rcid = returnResult.did
+//                let vc = ScanCodeViewController()
+//                vc.type = 1
+                self.hidesBottomBarWhenPushed=true
+                self.navigationController?.pushViewController(vc, animated: true)
+                self.hidesBottomBarWhenPushed=false
+            }else{
+                self.performSegueWithIdentifier("showDetail", sender: Collection(collectionView: collectionView,indexPath: indexPath))
+            }
         }
     }
     

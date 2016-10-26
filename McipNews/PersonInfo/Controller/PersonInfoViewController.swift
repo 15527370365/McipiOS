@@ -53,7 +53,7 @@ class PersonInfoViewController: UIViewController {
             MBProgressHUD.hideHUDForView(self.view, animated: true)
             //print(result.userid)
             self.person = result
-            self.nameLabel.text = self.person.uname
+            self.nameLabel.text = self.person.unickname
             var sex = "男"
             if self.person.usex == 0{
                 sex = "女"

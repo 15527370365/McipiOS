@@ -37,19 +37,19 @@ class UserInfoViewController: UIViewController {
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.bezelView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         hud.label.text = "Loading"
-        DataTool.loadPersonInfo() { result -> Void in
+        DataTool.loadUserInfo() { result -> Void in
             MBProgressHUD.hideHUDForView(self.view, animated: true)
-            self.nameLabel.text = result.uname
+            self.nameLabel.text = result.user.unickname
             var sex = "男"
-            if result.usex == 0{
+            if result.user.usex == 0{
                 sex = "女"
             }
             self.sexLabel.text = sex
-            self.birthdayLabel.text = result.ubirthday
-            self.phoneLabel.text = result.uprovince + " " + result.ucity
-            self.emailLabel.text = result.umail
-            self.phoneLabel.text = result.uphone
-            self.cardLabel.text = result.ucard
+            self.birthdayLabel.text = result.user.ubirthday
+            self.phoneLabel.text = result.user.uprovince + " " + result.user.ucity
+            self.emailLabel.text = result.user.umail
+            self.phoneLabel.text = result.user.uphone
+            self.cardLabel.text = result.user.ucard
         }
     }
 

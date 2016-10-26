@@ -14,8 +14,8 @@ import Alamofire
 import SwiftyJSON
 
 
-//let server = "http://www.syzc.net.cn/mcip"
-let server = "http://www.wanghongyu.cn/mcip"
+let server = "http://www.syzc.net.cn/mcip"
+//let server = "http://www.wanghongyu.cn/mcip"
 
 struct DataTool {
     
@@ -45,7 +45,7 @@ struct DataTool {
         let json = fetchJsonFromNet(server+"/common/getTableInfo", parameters,headers)
         json.jsonToModel(nil) { result in
             var news:[News] = []
-            print(result)
+            //print(result)
             if result["code"].string=="40000" {
                 //let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
                 //var array:[Channel]
@@ -397,6 +397,7 @@ struct DataTool {
         //print(parameters)
         let json = fetchJsonFromNet(server+"/rollcall/getScancode", parameters, headers)
         json.jsonToModel(nil) { result in
+            //print(result)
             var content = ""
             var flag = false
             switch result["code"].stringValue{
@@ -459,11 +460,11 @@ struct DataTool {
     static func loadDormitoryRollcall(info:String,completionHandler:(flag:Bool,content:String,did:String)->Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
         let parameters = ["info":info,"time":"\(Int(NSDate().timeIntervalSince1970*1000))"]
-        print(Int(NSDate().timeIntervalSince1970*1000))
-        print(parameters)
+        //print(Int(NSDate().timeIntervalSince1970*1000))
+        //print(parameters)
         let json = fetchJsonFromNet(server+"/rollcall/dormitoryRollcall", parameters, headers)
         json.jsonToModel(nil) { result in
-            print(result)
+            //print(result)
             var content = ""
             var flag = false
             switch result["msg"].stringValue{
@@ -483,9 +484,9 @@ struct DataTool {
         }
     }
     
-    static func loadVerifyFaceDormitory(rcid:String,completionHandler:(flag:Bool,content:String)->Void){
+    static func loadVerifyFaceDormitory(did:String,completionHandler:(flag:Bool,content:String)->Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
-        let parameters = ["did":rcid]
+        let parameters = ["did":did]
         //print(parameters)
         let json = fetchJsonFromNet(server+"/rollcall/verifyFaceDormitory", parameters, headers)
         json.jsonToModel(nil) { result in
@@ -512,7 +513,7 @@ struct DataTool {
     
     static func loadPersonInfo(completionHandler:(person:Person)->Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
-        let parameters = ["path":"users?select=userid,uname,upic,usex,ubirthday,uprovince,ucity,ucollege,uclass,udescription&userid=eq."+userid+""]
+        let parameters = ["path":"users?select=userid,unickname,upic,usex,ubirthday,uprovince,ucity,ucollege,uclass,udescription&userid=eq."+userid+""]
         //print(parameters)
         let json = fetchJsonFromNet(get, parameters, headers)
         json.jsonToModel(nil) { result in
@@ -561,8 +562,9 @@ struct DataTool {
     
     static func loadUserInfo(completionHandler:(flag:Bool,user:Person)->Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
-        let parameters = ["path":"users?select=userid,uname,upic,usex,uphone,umail,ucredit,uprovience,ucity,ubirthday&userid=eq."+userid+""]
-        let json = fetchJsonFromNet(post, parameters, headers)
+        let parameters = ["path":"users?select=userid,upass,unickname,upic,usex,uphone,umail,ucredit,uprovince,ucity,ubirthday&userid=eq."+userid+""]
+        let json = fetchJsonFromNet(get, parameters, headers)
+        //print(parameters)
         json.jsonToModel(nil) { result in
             //print(result)
             if result["code"].string=="200" {
@@ -582,6 +584,37 @@ struct DataTool {
         json.jsonToModel(nil) { result in
             //print(result)
             if result["code"].string=="204" {
+                //let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
+                completionHandler(flag:true)
+            }else{
+                completionHandler(flag:false)
+            }
+        }
+    }
+    static func changeLoginPassword(newPassword:String,completionHandler:(flag:Bool)->Void){
+        let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
+        let parameters = ["oldpass":password,"data":newPassword]
+        //print(parameters)
+        let json = fetchJsonFromNet(server+"/user/checkUpass", parameters, headers)
+        json.jsonToModel(nil) { result in
+            //print(result)
+            if result["code"].string=="70000" {
+                //let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
+                completionHandler(flag:true)
+            }else{
+                completionHandler(flag:false)
+            }
+        }
+    }
+    
+    static func setSchedule(noticeid:NSNumber,completionHandler:(flag:Bool)->Void){
+        let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
+        let parameters = ["noticeid":"\(noticeid)"]
+        //print(parameters)
+        let json = fetchJsonFromNet(server+"/notice/setSchedule", parameters, headers)
+        json.jsonToModel(nil) { result in
+            //print(result)
+            if result["code"].string=="50000" {
                 //let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
                 completionHandler(flag:true)
             }else{

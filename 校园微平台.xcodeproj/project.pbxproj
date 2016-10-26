@@ -38,7 +38,6 @@
 		042C25F61DBA68B700A67AF2 /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C25F41DBA68B700A67AF2 /* VerifyViewController.swift */; };
 		042C261B1DBA752F00A67AF2 /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042C25C01DBA56DB00A67AF2 /* iflyMSC.framework */; };
 		04315A3D1CE763A70031F325 /* StudentHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04315A3C1CE763A70031F325 /* StudentHomeController.swift */; };
-		04315A3F1CE798930031F325 /* StudentHome.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04315A3E1CE798930031F325 /* StudentHome.plist */; };
 		04315A411CE79C590031F325 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04315A401CE79C590031F325 /* Channel.swift */; };
 		043512C61D75300E00BC594E /* EditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043512C51D75300E00BC594E /* EditInfoViewController.swift */; };
 		043B985E1CECBB7400532EC8 /* DataTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043B985A1CECBB7400532EC8 /* DataTool.swift */; };
@@ -68,6 +67,8 @@
 		0482818A1D25897D0033DC4E /* SelectReceiverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048281891D25897D0033DC4E /* SelectReceiverViewController.swift */; };
 		0482818C1D258D790033DC4E /* SelectNewReceiverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482818B1D258D790033DC4E /* SelectNewReceiverViewController.swift */; };
 		0482818E1D2595EA0033DC4E /* SelectSendTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482818D1D2595EA0033DC4E /* SelectSendTimeViewController.swift */; };
+		048853861DBFB18E001551C9 /* SelfPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048853851DBFB18E001551C9 /* SelfPhoneNumber.swift */; };
+		048853881DBFB7CA001551C9 /* SelfMailRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048853871DBFB7CA001551C9 /* SelfMailRule.swift */; };
 		048D327C1CF2098000D5656B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D327B1CF2098000D5656B /* HomeViewController.swift */; };
 		04B05B3D1CCD1956000EB09E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B05B3C1CCD1956000EB09E /* AppDelegate.swift */; };
 		04B05B551CCD1956000EB09E /* McipNewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B05B541CCD1956000EB09E /* McipNewsTests.swift */; };
@@ -186,7 +187,6 @@
 		042C25F41DBA68B700A67AF2 /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		042C25F91DBA6CB400A67AF2 /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
 		04315A3C1CE763A70031F325 /* StudentHomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentHomeController.swift; sourceTree = "<group>"; };
-		04315A3E1CE798930031F325 /* StudentHome.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = StudentHome.plist; sourceTree = "<group>"; };
 		04315A401CE79C590031F325 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		043512C51D75300E00BC594E /* EditInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditInfoViewController.swift; sourceTree = "<group>"; };
 		043B985A1CECBB7400532EC8 /* DataTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTool.swift; sourceTree = "<group>"; };
@@ -217,6 +217,8 @@
 		048281891D25897D0033DC4E /* SelectReceiverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectReceiverViewController.swift; sourceTree = "<group>"; };
 		0482818B1D258D790033DC4E /* SelectNewReceiverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectNewReceiverViewController.swift; sourceTree = "<group>"; };
 		0482818D1D2595EA0033DC4E /* SelectSendTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSendTimeViewController.swift; sourceTree = "<group>"; };
+		048853851DBFB18E001551C9 /* SelfPhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfPhoneNumber.swift; sourceTree = "<group>"; };
+		048853871DBFB7CA001551C9 /* SelfMailRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfMailRule.swift; sourceTree = "<group>"; };
 		048D327B1CF2098000D5656B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		04B05B391CCD1956000EB09E /* 校园微平台.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "校园微平台.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B05B3C1CCD1956000EB09E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -579,6 +581,8 @@
 			isa = PBXGroup;
 			children = (
 				044C83981D8545E900596B84 /* CreditNumberRule.swift */,
+				048853851DBFB18E001551C9 /* SelfPhoneNumber.swift */,
+				048853871DBFB7CA001551C9 /* SelfMailRule.swift */,
 			);
 			path = CustomValidation;
 			sourceTree = "<group>";
@@ -729,7 +733,6 @@
 				043C8CE81CCE917100E53F7C /* Common */,
 				04B05B4B1CCD1956000EB09E /* Info.plist */,
 				04ED8B7B1CF07ED100293D0F /* Assets.xcassets */,
-				04315A3E1CE798930031F325 /* StudentHome.plist */,
 			);
 			path = McipNews;
 			sourceTree = "<group>";
@@ -1094,7 +1097,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D6FF3B1D2AC59C0093F99A /* CodeScan.bundle in Resources */,
-				04315A3F1CE798930031F325 /* StudentHome.plist in Resources */,
 				04ED8B761CF0340D00293D0F /* MJRefresh.bundle in Resources */,
 				04ED8B7C1CF07ED100293D0F /* Assets.xcassets in Resources */,
 				04B05B771CCD1A49000EB09E /* Main.storyboard in Resources */,
@@ -1222,6 +1224,7 @@
 				046DE19D1D2CE82200207935 /* XHAdLoopView.swift in Sources */,
 				04ED8B771CF0340D00293D0F /* MJRefreshConst.m in Sources */,
 				043C8CF81CCE923E00E53F7C /* Users+CoreDataProperties.swift in Sources */,
+				048853881DBFB7CA001551C9 /* SelfMailRule.swift in Sources */,
 				04EAB5801D2D8AB3007A3184 /* ReplyCell.swift in Sources */,
 				042C25EE1DBA593200A67AF2 /* IFlyFaceResultDetector.m in Sources */,
 				043C2A541CDDDE5D005A94C6 /* NewsTableViewController.swift in Sources */,
@@ -1248,6 +1251,7 @@
 				042C25EB1DBA593200A67AF2 /* UIImage+compress.m in Sources */,
 				04ED8B751CF0340D00293D0F /* MJRefreshStateHeader.m in Sources */,
 				04EAB5841D2DB956007A3184 /* ReceiverCell.swift in Sources */,
+				048853861DBFB18E001551C9 /* SelfPhoneNumber.swift in Sources */,
 				04F2BE141CF3593B002E6628 /* ButtonTool.swift in Sources */,
 				042C25D41DBA592600A67AF2 /* CanvasView.m in Sources */,
 				04D128D21D7076C20057F08B /* SettingViewController.swift in Sources */,

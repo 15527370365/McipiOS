@@ -59,7 +59,7 @@ class VerifyViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         self.iFlySpFaceRequest?.setParameter(IFlySpeechConstant.FACE_VERIFY(), forKey: IFlySpeechConstant.FACE_SST())
         self.iFlySpFaceRequest?.setParameter("57899eda", forKey: IFlySpeechConstant.APPID())
-        self.iFlySpFaceRequest?.setParameter("57899eda", forKey: "auth_id")
+        self.iFlySpFaceRequest?.setParameter("1309030404", forKey: "auth_id")
         self.iFlySpFaceRequest?.setParameter("del", forKey: "property")
         self.iFlySpFaceRequest?.setParameter(
             faceid, forKey: IFlySpeechConstant.FACE_GID())
@@ -182,9 +182,14 @@ class VerifyViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 
                             }
                         }else{
-                            DataTool.loadVerifyFaceDormitory(self.rcid){ (returnResult) -> Void in
-                                
-                            }
+//                            DataTool.loadVerifyFaceDormitory(self.rcid){ (returnResult) -> Void in
+//                                
+//                            }
+                            let vc = ScanCodeViewController()
+                            vc.type = 1
+                            self.hidesBottomBarWhenPushed=true
+                            self.navigationController?.pushViewController(vc, animated: true)
+
                         }
                     }else {
                         resultInfo=resultInfo.stringByAppendingString("验证结果:验证失败!")

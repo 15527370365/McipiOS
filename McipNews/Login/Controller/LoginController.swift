@@ -69,10 +69,11 @@ class LoginController: UIViewController {
             //let parameters = ["consumer_key": ALAMOFIRE_KEY,"userid":userField.text!,"upass":passField.text!,"ustateadd":result.mac,"uequipment":"4","uchannelid":"123"]
             Alamofire.request(.POST, POST_LOGIN, parameters:parameters).responseJSON() {
                 response in
-                print(response.request)
+                //print(response.request)
                 if let jsonValue = response.result.value {
                     MBProgressHUD.hideHUDForView(self.view, animated: true)
                     let resultJSON=JSON(jsonValue)
+                    //print(resultJSON)
                     if resultJSON["code"].string=="30000" {
                         let appDelegate:AppDelegate=UIApplication.sharedApplication().delegate as! AppDelegate
                         let manageObjectContext = appDelegate.managedObjectContext
@@ -82,11 +83,27 @@ class LoginController: UIViewController {
                         user.loginTime=CommonFunction.getNowTimeString()
                         user.exitTime=""
                         user.image=resultJSON["upic"].stringValue
+                        user.password = self.passField.text!
+                        let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
+
+                        if(NSFileManager().fileExistsAtPath(plistPath)){
+                            let dict  = NSMutableDictionary(contentsOfFile: plistPath)
+                            //print(dict)
+                            //print(dict![self.userField.text!])
+                            if let face=dict!.objectForKey(self.userField.text!){
+                                //print(123)
+                                faceid = face as! String
+                                user.faceid = faceid
+                            }
+                        }
+                        //print(user.image)
                         do{
                             try manageObjectContext.save()
                             userid = self.userField.text!
                             token = resultJSON["token"].string!
                             image = resultJSON["upic"].stringValue
+                            password = self.passField.text!
+                            
                             print(token)
                             let news = DataTool.loadNewsChannels(1)
                             if news.1{

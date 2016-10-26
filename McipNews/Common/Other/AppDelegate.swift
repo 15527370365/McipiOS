@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         print("didFinishLaunchingWithOptions")
+        //print(NSDate.TimeIntervalSince1970())
         //MARK: - FaceDetect settings
 //        //创建语音配置,appid必须要传入，仅执行一次则可
 //        let initString:String = "appid=57899eda";
@@ -54,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 userid=user.userid!
                 token=user.token!
                 image = user.image!
+                password = user.password!
                 if let id = user.faceid{
                     faceid = id
                 }
@@ -98,9 +100,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         print("applicationDidBecomeActive")
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-//        DataTool.loadWeather(){ result -> Void in
-//            print(result.weatherImageName1)
+//        let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
+//        if(NSFileManager().fileExistsAtPath(plistPath)){
+//            let dict  = NSDictionary(contentsOfFile: plistPath)
+//            print(dict)
+//            print(dict![userid])
 //        }
         if token != "" && !DataTool.checkToken() {
             CommonFunction.exit()

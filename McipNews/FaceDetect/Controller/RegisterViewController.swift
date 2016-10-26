@@ -61,7 +61,8 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
         
         self.iFlySpFaceRequest?.setParameter(IFlySpeechConstant.FACE_REG(), forKey: IFlySpeechConstant.FACE_SST())
         self.iFlySpFaceRequest?.setParameter("57899eda", forKey: IFlySpeechConstant.APPID())
-        self.iFlySpFaceRequest?.setParameter("57899eda", forKey: "auth_id")
+        self.iFlySpFaceRequest?.setParameter("1309030404", forKey: "auth_id")
+//        self.iFlySpFaceRequest?.setParameter("1309030404", forKey: IFlySpeechConstant.FACE_GID())
         self.iFlySpFaceRequest?.setParameter("del", forKey: "property")
 
         //  压缩图片大小
@@ -144,9 +145,9 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
             let errorInfo = "错误码：\(error!.errorCode)\n 错误描述：\(error!.errorDesc)"
             self.performSelectorOnMainThread(#selector(showResultInfo), withObject: errorInfo, waitUntilDone: false)
         }else {
-            self.performSelectorOnMainThread(#selector(showResultInfo), withObject: "成功啦", waitUntilDone: false)
+            
             let result = JSON(data: self.resultStrings!.dataUsingEncoding(NSUTF8StringEncoding)!)
-            print("asda"+result["gid"].stringValue)
+            print("asda:"+result["gid"].stringValue)
             let appDelegate:AppDelegate=UIApplication.sharedApplication().delegate as! AppDelegate
             let manageObjectContext = appDelegate.managedObjectContext
             let entity:NSEntityDescription? = NSEntityDescription.entityForName("Users", inManagedObjectContext:manageObjectContext)
@@ -159,11 +160,26 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
             do{
                 let results = try manageObjectContext.executeFetchRequest(request) as! [Users]
                 results[0].faceid = result["gid"].stringValue
-                faceid = result["gid"].stringValue
                 do {
                     try manageObjectContext.save()
+                    faceid = result["gid"].stringValue
+                    let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
+                    
+                    if(!NSFileManager().fileExistsAtPath(plistPath)){
+                        let dict = NSMutableDictionary()
+                        dict.setObject(faceid, forKey: userid)
+                        dict.writeToFile(plistPath, atomically: true)
+                        //print(123)
+                    }else{
+                        let dict  = NSMutableDictionary(contentsOfFile: plistPath)
+                        dict!.setObject(faceid, forKey: userid)
+                        dict!.writeToFile(plistPath, atomically: true)
+                        //print(4556)
+                    }
+                    self.performSelectorOnMainThread(#selector(showResultInfo), withObject: "人脸信息采集成功", waitUntilDone: false)
                 } catch  {
                     print("Core Data Error!")
+                    self.performSelectorOnMainThread(#selector(showResultInfo), withObject: "系统异常，请稍后再试", waitUntilDone: false)
                 }
             }catch{
                 print("Core Data Error!")

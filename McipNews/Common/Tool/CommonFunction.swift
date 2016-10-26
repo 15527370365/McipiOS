@@ -78,6 +78,10 @@ class CommonFunction: NSObject {
         }
         token = ""
         userid = ""
+        faceid = ""
+        image = ""
+        password = ""
+        
     }
     
     class func exit(view:AnyObject){
@@ -139,7 +143,8 @@ class CommonFunction: NSObject {
     class func imageToBase64String(image:UIImage,headerSign:Bool = false)->String?{
         
         ///根据图片得到对应的二进制编码
-        guard let imageData = UIImagePNGRepresentation(image) else {
+        
+        guard let imageData = UIImageJPEGRepresentation(image, 0.5) else {
             return nil
         }
         ///根据二进制编码得到对应的base64字符串

@@ -71,7 +71,7 @@ func fetchJsonFromNet(urlStr: String, _ parameters: [String: AnyObject]? = nil,_
     -> NetworkRequster<JSON> {
         return NetworkRequster { completion in
             Alamofire.request(.POST, urlStr, parameters: parameters,headers:headers).responseJSON { (response) -> Void in
-                print(response.request)
+                //print(response.request)
                 guard response.result.error == nil else {
                     print(response.result.error)
                     print("Alamofire error!")

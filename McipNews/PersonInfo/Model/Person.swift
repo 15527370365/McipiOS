@@ -23,10 +23,11 @@ class Person: NSObject {
     var uphone:String!
     var umail:String!
     var ucard:String!
+    var unickname:String!
     
     init(data:JSON) {
         self.userid = data["userid"].stringValue
-        self.uname = data["uname"].stringValue
+        self.unickname = data["unickname"].stringValue
         self.upic = data["upic"].stringValue
         self.usex = data["usex"].intValue
         self.ubirthday = data["ubirthday"].stringValue
@@ -39,7 +40,7 @@ class Person: NSObject {
     
     init(json:JSON) {
         self.userid = json["userid"].stringValue
-        self.uname = json["uname"].stringValue
+        self.unickname = json["unickname"].stringValue
         self.upic = json["upic"].stringValue
         self.usex = json["usex"].intValue
         self.ubirthday = json["ubirthday"].stringValue

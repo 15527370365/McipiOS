@@ -26,11 +26,7 @@ class EditInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.userImage.contentMode = .ScaleAspectFill
-        userImage.layer.masksToBounds = true
-        userImage.layer.cornerRadius = userImage.bounds.size.width * 0.5
-        userImage.layer.borderWidth = 2
-        userImage.layer.borderColor = UIColor.whiteColor().CGColor
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,24 +42,32 @@ class EditInfoViewController: UIViewController {
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.bezelView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         hud.label.text = "Loading"
-        DataTool.loadPersonInfo() { result -> Void in
+        DataTool.loadUserInfo() { result -> Void in
             MBProgressHUD.hideHUDForView(self.view, animated: true)
             if image.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0 {
                 self.userImage.image = UIImage(data: NSData(base64EncodedString: image, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)
+                self.userImage.contentMode = .ScaleAspectFill
+                self.userImage.layer.layoutIfNeeded()
+                self.userImage.layer.masksToBounds = true
+                self.userImage.layer.cornerRadius = self.userImage.bounds.size.width * 0.5
             }else{
                 self.userImage.image = UIImage(named: "default_user_image")
+                self.userImage.contentMode = .ScaleAspectFill
+                self.userImage.layer.layoutIfNeeded()
+                self.userImage.layer.masksToBounds = true
+                self.userImage.layer.cornerRadius = self.userImage.bounds.size.width * 0.5
             }
-            self.nameLabel.text = result.uname
+            self.nameLabel.text = result.user.unickname
             var sex = "男"
-            if result.usex == 0{
+            if result.user.usex == 0{
                 sex = "女"
             }
             self.sexLabel.text = sex
-            self.birthdayLabel.text = result.ubirthday
-            self.phoneLabel.text = result.uprovince + " " + result.ucity
-            self.emailLabel.text = result.umail
-            self.phoneLabel.text = result.uphone
-            self.cardLabel.text = result.ucard
+            self.birthdayLabel.text = result.user.ubirthday
+            self.phoneLabel.text = result.user.uprovince + " " + result.user.ucity
+            self.emailLabel.text = result.user.umail
+            self.phoneLabel.text = result.user.uphone
+            self.cardLabel.text = result.user.ucard
         }
     }
     
@@ -88,9 +92,9 @@ class EditInfoViewController: UIViewController {
             case 100:
                 self.validator.registerField(textField, rules: [RequiredRule()])
             case 101:
-                self.validator.registerField(textField, rules: [RequiredRule(),EmailRule()])
+                self.validator.registerField(textField, rules: [RequiredRule(),SelfMailRule()])
             case 102:
-                self.validator.registerField(textField, rules: [RequiredRule(),PhoneNumberRule()])
+                self.validator.registerField(textField, rules: [RequiredRule(),SelfPhoneNumberRule()])
             case 103:
                 self.validator.registerField(textField, rules: [RequiredRule(),CreditNumberRule()])
             default:
@@ -103,12 +107,75 @@ class EditInfoViewController: UIViewController {
             //也可以用下标的形式获取textField let login = alertController.textFields![0]
             let textInput = alertController.textFields!.first! as UITextField
             self.textInpustSureBtnEvent(sender.tag, value: textInput.text!)
-            print(textInput.text)
+            //print(textInput.text)
         })
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
+    
+    @IBAction func changePwdBtnEvent(sender: UIControl) {
+        let alertController = UIAlertController(title: "修改密码",
+                                                message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addTextFieldWithConfigurationHandler {
+            (textField: UITextField!) -> Void in
+            textField.placeholder = "原始密码"
+            textField.secureTextEntry = true
+            
+        }
+        alertController.addTextFieldWithConfigurationHandler {
+            (textField: UITextField!) -> Void in
+            textField.placeholder = "新密码"
+            textField.secureTextEntry = true
+        }
+        alertController.addTextFieldWithConfigurationHandler {
+            (textField: UITextField!) -> Void in
+            textField.placeholder = "再次输入"
+            textField.secureTextEntry = true
+        }
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        let okAction = UIAlertAction(title: "好的", style: .Default,handler: { action in
+            //也可以用下标的形式获取textField let login = alertController.textFields![0]
+            let oldPwd = alertController.textFields![0] as UITextField
+            let newPwd = alertController.textFields![1] as UITextField
+            let samePwd = alertController.textFields![2] as UITextField
+            let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.Default, handler: nil))
+            let length = newPwd.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+            if samePwd.text != newPwd.text{
+                alertController.message = "两次输入的密码不一致"
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }else if oldPwd.text != password {
+                alertController.message = "原始密码错误"
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }else if newPwd.text == "" {
+                alertController.message = "新密码不能为空"
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }else if length > 15 || length < 6{
+                alertController.message = "新密码的长度应该在6-15位"
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }else{
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.bezelView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+                hud.label.text = "Waitting"
+                DataTool.changeLoginPassword(newPwd.text!) { result -> Void in
+                    MBProgressHUD.hideHUDForView(self.view, animated: true)
+                    if result {
+                        alertController.message = "修改成功！"
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                        password = newPwd.text!
+                    }else{
+                        alertController.message = "系统异常，请稍后再试！"
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
+        })
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     
     func textInpustSureBtnEvent(tag:Int,value:String){
         self.validator.validate(self)
@@ -117,18 +184,19 @@ class EditInfoViewController: UIViewController {
         switch tag {
         case 100:
             if !self.validateState {
-                alertController.message = "姓名不能为空"
+                alertController.message = "昵称不能为空"
                 self.presentViewController(alertController, animated: true, completion: nil)
                 //alert.message = "姓名不能为空"
             }else{
                 let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 hud.bezelView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
                 hud.label.text = "Waitting"
-                DataTool.editUserInfo("uname",value: value) { result -> Void in
+                DataTool.editUserInfo("unickname",value: value) { result -> Void in
                     MBProgressHUD.hideHUDForView(self.view, animated: true)
                     if result {
                         alertController.message = "修改成功！"
                         self.presentViewController(alertController, animated: true, completion: nil)
+                        self.nameLabel.text = value
                     }else{
                         alertController.message = "系统异常，请稍后再试！"
                         self.presentViewController(alertController, animated: true, completion: nil)
@@ -149,6 +217,7 @@ class EditInfoViewController: UIViewController {
                     if result {
                         alertController.message = "修改成功！"
                         self.presentViewController(alertController, animated: true, completion: nil)
+                        self.emailLabel.text = value
                     }else{
                         alertController.message = "系统异常，请稍后再试！"
                         self.presentViewController(alertController, animated: true, completion: nil)
@@ -169,6 +238,7 @@ class EditInfoViewController: UIViewController {
                     if result {
                         alertController.message = "修改成功！"
                         self.presentViewController(alertController, animated: true, completion: nil)
+                        self.phoneLabel.text = value
                     }else{
                         alertController.message = "系统异常，请稍后再试！"
                         self.presentViewController(alertController, animated: true, completion: nil)
@@ -189,6 +259,7 @@ class EditInfoViewController: UIViewController {
                     if result {
                         alertController.message = "修改成功！"
                         self.presentViewController(alertController, animated: true, completion: nil)
+                        self.cardLabel.text = value
                     }else{
                         alertController.message = "系统异常，请稍后再试！"
                         self.presentViewController(alertController, animated: true, completion: nil)
@@ -220,15 +291,25 @@ extension EditInfoViewController:UIImagePickerControllerDelegate,UINavigationCon
     {
         self.dismissViewControllerAnimated(true, completion:nil);
         let gotImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.bezelView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-        hud.label.text = "Waitting"
+//        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        hud.bezelView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+//        hud.label.text = "Waitting"
         let base64String = CommonFunction.imageToBase64String(gotImage)
+//        let changeString = base64String?.stringByReplacingOccurrencesOfString("/", withString: "\\/")
+//        print(changeString)
         DataTool.editUserInfo("upic",value: base64String!) { result -> Void in
             MBProgressHUD.hideHUDForView(self.view, animated: true)
             if result {
                 image = base64String!
                 self.userImage.image = UIImage(data: NSData(base64EncodedString: image, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!)
+                self.userImage.contentMode = .ScaleAspectFill
+                self.userImage.layer.layoutIfNeeded()
+                self.userImage.layer.masksToBounds = true
+                self.userImage.layer.cornerRadius = self.userImage.bounds.size.width * 0.5
+                //print(base64String!)
+                let alertController = UIAlertController(title: "提醒", message: "修改成功", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
             }else{
                 let alertController = UIAlertController(title: "提醒", message: "系统异常，请稍后再试", preferredStyle: UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.Default, handler: nil))

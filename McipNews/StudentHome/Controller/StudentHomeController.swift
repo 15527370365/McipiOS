@@ -30,7 +30,7 @@ class StudentHomeController: PageController {
         let datas = result.0
         //print(datas)
         vcTitles.append(Channel(dict:["mname":"学子家园","moduleid":1,"mintroduce":"","mfixed":1]))
-        vcTitles.append(Channel(dict:["mname":"党建工作","moduleid":1,"mintroduce":"","mfixed":1]))
+        vcTitles.append(Channel(dict:["mname":"党建园地","moduleid":1,"mintroduce":"","mfixed":1]))
         for i in 0..<datas["follow"].count{
             let tempChannel = Channel(json: datas["follow"][i])
             switch tempChannel.mname {
@@ -122,7 +122,7 @@ class StudentHomeController: PageController {
             let vc = sb.instantiateViewControllerWithIdentifier("StudentHomeChild") as! StudentHomeChildViewController
             vc.titles = shArray
             return vc
-        }else if vcTitles[index].mname == "党建工作" {
+        }else if vcTitles[index].mname == "党建园地" {
             let vc = sb.instantiateViewControllerWithIdentifier("PartySetChild") as! PartySetChildViewController
             vc.titles = ptArray
             return vc

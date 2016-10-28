@@ -16,7 +16,7 @@ class CallViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.delegate = self
-        let url = NSURL(string:"http://www.wanghongyu.cn/mcip/education/getClassroomRollCall/\(userid)-\(rccid)")
+        let url = NSURL(string:server+"/education/getClassroomRollCall/\(userid)-\(rccid)")
         let request : NSMutableURLRequest = NSMutableURLRequest(URL: url!, cachePolicy: NSURLRequestCachePolicy.UseProtocolCachePolicy, timeoutInterval: 10)
         request.HTTPMethod = "GET"//设置请求方式为POST，默认为GET
         request.addValue(userid, forHTTPHeaderField: "userid")

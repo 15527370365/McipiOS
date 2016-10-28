@@ -82,7 +82,8 @@ class AddNoticeViewController: UIViewController {
         let userInfo = notification.userInfo as! [String: AnyObject]
         self.sendTime = (userInfo["type"] as! Int, userInfo["time"] as! String)
         if self.sendTime.type == 1 {
-            self.timeButton.titleLabel?.text = self.sendTime.time
+            //self.timeButton.titleLabel?.text = self.sendTime.time
+            self.timeButton.setTitle(self.sendTime.time, forState: .Normal)
         }
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }

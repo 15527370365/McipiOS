@@ -47,15 +47,15 @@ class MyCampusViewController: UIViewController {
     }
     
     func setBtnData(){
-        saveData.append(ButtonCell(image: "calendar.png",title: "日程",url: "/mcip/user/getMySchedule"))
-        saveData.append(ButtonCell(image: "leave.png",title: "请销假",url: "/mcip/user/getMyNoteList"))
-        saveData.append(ButtonCell(image: "rollcall.png",title: "点名记录",url: "/mcip/education/getMyTodayRollCall"))
-        saveData.append(ButtonCell(image: "task.png",title: "作业",url: "/mcip/user/getMyHomework"))
-        saveData.append(ButtonCell(image: "emptyroom.png",title: "自习室",url: "/mcip/education/queryEmptyRoom"))
-        defaultData.append(ButtonCell(image: "myclasses.png",title: "我的课表",url: "/mcip/education/showCourseTable"))
-        defaultData.append(ButtonCell(image: "tests.png",title: "考试安排",url: "/mcip/education/showExamSchedule"))
-        defaultData.append(ButtonCell(image: "tsgrades.png",title: "本学期成绩",url: "/mcip/education/showThisTermClass"))
-        defaultData.append(ButtonCell(image: "allgrades.png",title: "已修成绩",url: "/mcip/education/showLearnedCourse"))
+        saveData.append(ButtonCell(image: "calendar.png",title: "日程",url: "/user/getMySchedule"))
+        saveData.append(ButtonCell(image: "leave.png",title: "请销假",url: "/user/getMyNoteList"))
+        saveData.append(ButtonCell(image: "rollcall.png",title: "点名记录",url: "/education/getMyTodayRollCall"))
+        saveData.append(ButtonCell(image: "task.png",title: "作业",url: "/user/getMyHomework"))
+        saveData.append(ButtonCell(image: "emptyroom.png",title: "自习室",url: "/education/queryEmptyRoom"))
+        defaultData.append(ButtonCell(image: "myclasses.png",title: "我的课表",url: "/education/showCourseTable"))
+        defaultData.append(ButtonCell(image: "tests.png",title: "考试安排",url: "/education/showExamSchedule"))
+        defaultData.append(ButtonCell(image: "tsgrades.png",title: "本学期成绩",url: "/education/showThisTermClass"))
+        defaultData.append(ButtonCell(image: "allgrades.png",title: "已修成绩",url: "/education/showLearnedCourse"))
         saveData.append(ButtonCell(image: "dormitory.png",title: "寝室点名",url: ""))
     }
     

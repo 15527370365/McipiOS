@@ -81,7 +81,7 @@ class HomeViewController:UIViewController {
             }else{
                 self.weatherImage.kf_setImageWithURL(NSURL(string: "http://m.weather.com.cn/img/a"+n1+".gif")!,placeholderImage: UIImage(named: "weather1"))
                 self.weatherImage2.kf_setImageWithURL(NSURL(string: "http://m.weather.com.cn/img/a"+n2+".gif")!,placeholderImage: UIImage(named: "weather1"))
-                self.weatherImage2.hidden = false
+                self.weatherImage2.hidden = true
             }
             //self.weatherImage.image = UIImage(named: result.weatherImageName1)
             self.weatherLabel.text = result.weatherLable
@@ -184,7 +184,7 @@ extension HomeViewController:UITableViewDataSource,UITableViewDelegate{
             let image = cell.viewWithTag(204) as! UIImageView
             let news = cellModel.data as! News
             title.text = news.ntitle
-            from.text = "来自："+news.nfrom
+            from.text = "来自：推荐"
             //print(news.nimage)
             image.kf_setImageWithURL(NSURL(string: news.nimage)!,placeholderImage: UIImage(named: defautImage))
             time.text=news.ntime

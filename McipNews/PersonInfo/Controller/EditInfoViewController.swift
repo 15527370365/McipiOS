@@ -62,6 +62,7 @@ class EditInfoViewController: UIViewController {
             if result.user.usex == 0{
                 sex = "女"
             }
+            self.placeLabel.text = result.user.uprovince + " " + result.user.ucity
             self.sexLabel.text = sex
             self.birthdayLabel.text = result.user.ubirthday
             self.phoneLabel.text = result.user.uprovince + " " + result.user.ucity
@@ -161,9 +162,12 @@ class EditInfoViewController: UIViewController {
                 DataTool.changeLoginPassword(newPwd.text!) { result -> Void in
                     MBProgressHUD.hideHUDForView(self.view, animated: true)
                     if result {
-                        alertController.message = "修改成功！"
-                        self.presentViewController(alertController, animated: true, completion: nil)
-                        password = newPwd.text!
+                        let alert=UIAlertView(title: "提示", message: "", delegate: nil, cancelButtonTitle: "OK")
+                        alert.message="密码修改成功,请重新登录";
+                        alert.show()
+                        CommonFunction.exit()
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        self.navigationController?.pushViewController(storyboard.instantiateViewControllerWithIdentifier("Login"), animated: true)
                     }else{
                         alertController.message = "系统异常，请稍后再试！"
                         self.presentViewController(alertController, animated: true, completion: nil)

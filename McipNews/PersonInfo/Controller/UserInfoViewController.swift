@@ -46,7 +46,7 @@ class UserInfoViewController: UIViewController {
             }
             self.sexLabel.text = sex
             self.birthdayLabel.text = result.user.ubirthday
-            self.phoneLabel.text = result.user.uprovince + " " + result.user.ucity
+            self.placeLabel.text = result.user.uprovince + " " + result.user.ucity
             self.emailLabel.text = result.user.umail
             self.phoneLabel.text = result.user.uphone
             self.cardLabel.text = result.user.ucard

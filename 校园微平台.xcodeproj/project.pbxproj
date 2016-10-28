@@ -1049,7 +1049,7 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 772N9R2W7N;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1421,8 +1421,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.net.syzc.McipNews;
 				PRODUCT_NAME = "校园微平台";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f30cdbca-6908-456d-b292-c497bf47cd09";
+				PROVISIONING_PROFILE_SPECIFIER = McipNews;
 				SWIFT_OBJC_BRIDGING_HEADER = "McipNews/Common/Other/McipNews-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
@@ -1440,7 +1440,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "校园微平台.entitlements";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 772N9R2W7N;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1457,8 +1457,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.net.syzc.McipNews;
 				PRODUCT_NAME = "校园微平台";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f5e20636-76f3-401a-88b1-d79c26181934";
+				PROVISIONING_PROFILE_SPECIFIER = Mcip_Provising_Profiles;
 				SWIFT_OBJC_BRIDGING_HEADER = "McipNews/Common/Other/McipNews-Bridging-Header.h";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;

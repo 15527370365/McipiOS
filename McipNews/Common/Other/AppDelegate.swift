@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let Types = UIUserNotificationType([.Sound,.Alert, .Badge])
         let settings = UIUserNotificationSettings(forTypes: Types, categories: nil)
         application.registerUserNotificationSettings(settings)
-        BPush.registerChannel(launchOptions, apiKey: PUSH_KEY, pushMode: BPushMode.Development, withFirstAction: nil, withSecondAction: nil, withCategory: nil, isDebug: true)
+        BPush.registerChannel(launchOptions, apiKey: PUSH_KEY, pushMode: BPushMode.Production, withFirstAction: nil, withSecondAction: nil, withCategory: nil, isDebug: true)
         // App 是用户点击推送消息启动
         if (launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
             let userInfo = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary
@@ -100,12 +100,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         print("applicationDidBecomeActive")
-//        let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
-//        if(NSFileManager().fileExistsAtPath(plistPath)){
-//            let dict  = NSDictionary(contentsOfFile: plistPath)
-//            print(dict)
-//            print(dict![userid])
-//        }
+        let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
+        if(NSFileManager().fileExistsAtPath(plistPath)){
+            let dict  = NSDictionary(contentsOfFile: plistPath)
+            print(dict)
+            print(dict![userid])
+        }
         if token != "" && !DataTool.checkToken() {
             CommonFunction.exit()
             let storyboard = UIStoryboard(name: "Main", bundle: nil)

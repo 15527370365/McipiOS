@@ -14,9 +14,6 @@ import Alamofire
 import SwiftyJSON
 
 
-let server = "http://www.syzc.net.cn/mcip"
-//let server = "http://www.wanghongyu.cn/mcip"
-
 struct DataTool {
     
     static let imageUrlKey = "imageUrlKey"
@@ -464,18 +461,18 @@ struct DataTool {
         //print(parameters)
         let json = fetchJsonFromNet(server+"/rollcall/dormitoryRollcall", parameters, headers)
         json.jsonToModel(nil) { result in
-            //print(result)
+            print(result)
             var content = ""
             var flag = false
-            switch result["msg"].stringValue{
-            case "10000":
+            switch result["code"].stringValue{
+            case "70000":
                 content = "签到成功"
                 flag = true
-            case "10001":
+            case "70001":
                 content = "扫码超时"
-            case "10002":
+            case "70002":
                 content = "设备中未找到用户信息"
-            case "10003":
+            case "70003":
                 content = "未找到二维码中的信息"
             default:
                 content = "二维码无效"
@@ -493,11 +490,11 @@ struct DataTool {
             var content = ""
             var flag = false
             switch result["code"].stringValue{
-            case "10000":
+            case "70000":
                 content = "在radis中找不到该token"
-            case "10001":
+            case "70001":
                 content = "token与userid不匹配"
-            case "10002":
+            case "70002":
                 content = "header中没有token或者没有userid信息"
             case "60000":
                 content = "点名成功"

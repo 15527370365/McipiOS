@@ -59,8 +59,10 @@ class PersonInfoViewController: UIViewController {
                 sex = "女"
             }
             self.detailLabel.text = sex
+            //print(self.person.ubirthday)
             if self.person.ubirthday.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) != 0{
-                if let year = Int (self.person.ubirthday.substringToIndex(self.person.ubirthday.startIndex.advancedBy(5))){
+                //print(self.person.ubirthday.substringToIndex(self.person.ubirthday.startIndex.advancedBy(4)))
+                if let year = Int (self.person.ubirthday.substringToIndex(self.person.ubirthday.startIndex.advancedBy(4))){
                     self.detailLabel.text = self.detailLabel.text! + " \(CommonFunction.getNowTime().year - year)岁"
                 }else{
                     self.detailLabel.text = self.detailLabel.text! + " 0岁"

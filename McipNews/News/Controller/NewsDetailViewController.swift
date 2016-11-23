@@ -27,7 +27,7 @@ class NewsDetailViewController: UIViewController {
             if self.type == 0 {
                 url = NSURL(string:server+"/common/writeTable/\(self.newsid)-"+userid)!
             }else{
-                url = NSURL(string:"http://file.ih5.cn?nid=3333064&key=1505280570&title=5rWL6K.V6aKY4oCU4oCU5Y.Y572R57qi77yf&html5=true&width=640")!
+                url = NSURL(string:host+"/game")!
             }
             
         }else{

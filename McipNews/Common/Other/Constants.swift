@@ -10,7 +10,8 @@ import UIKit
 
 //项目路径
 //let server = "http://www.syzc.net.cn/mcip"
-let server = "http://www.wanghongyu.cn/mcip"
+let host = "http://www.wanghongyu.cn"
+let server = host+"/mcip"
 
 //登录请求
 let POST_LOGIN = server+"/user/login"

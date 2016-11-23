@@ -145,46 +145,53 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
             let errorInfo = "错误码：\(error!.errorCode)\n 错误描述：\(error!.errorDesc)"
             self.performSelectorOnMainThread(#selector(showResultInfo), withObject: errorInfo, waitUntilDone: false)
         }else {
-            
-            let result = JSON(data: self.resultStrings!.dataUsingEncoding(NSUTF8StringEncoding)!)
-            print("asda:"+result["gid"].stringValue)
-            let appDelegate:AppDelegate=UIApplication.sharedApplication().delegate as! AppDelegate
-            let manageObjectContext = appDelegate.managedObjectContext
-            let entity:NSEntityDescription? = NSEntityDescription.entityForName("Users", inManagedObjectContext:manageObjectContext)
-            let request:NSFetchRequest = NSFetchRequest()
-            request.fetchOffset = 0
-            request.fetchLimit = 10
-            request.entity = entity
-            let predicate = NSPredicate(format: "exitTime== %@","")
-            request.predicate = predicate
-            do{
-                let results = try manageObjectContext.executeFetchRequest(request) as! [Users]
-                results[0].faceid = result["gid"].stringValue
-                do {
-                    try manageObjectContext.save()
-                    faceid = result["gid"].stringValue
-                    let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
-                    
-                    if(!NSFileManager().fileExistsAtPath(plistPath)){
-                        let dict = NSMutableDictionary()
-                        dict.setObject(faceid, forKey: userid)
-                        dict.writeToFile(plistPath, atomically: true)
-                        //print(123)
-                    }else{
-                        let dict  = NSMutableDictionary(contentsOfFile: plistPath)
-                        dict!.setObject(faceid, forKey: userid)
-                        dict!.writeToFile(plistPath, atomically: true)
-                        //print(4556)
+            DataTool.editUserInfo("ustate",value: "0") { result -> Void in
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
+                if result {
+                    let result = JSON(data: self.resultStrings!.dataUsingEncoding(NSUTF8StringEncoding)!)
+                    print("asda:"+result["gid"].stringValue)
+                    let appDelegate:AppDelegate=UIApplication.sharedApplication().delegate as! AppDelegate
+                    let manageObjectContext = appDelegate.managedObjectContext
+                    let entity:NSEntityDescription? = NSEntityDescription.entityForName("Users", inManagedObjectContext:manageObjectContext)
+                    let request:NSFetchRequest = NSFetchRequest()
+                    request.fetchOffset = 0
+                    request.fetchLimit = 10
+                    request.entity = entity
+                    let predicate = NSPredicate(format: "exitTime== %@","")
+                    request.predicate = predicate
+                    do{
+                        let results = try manageObjectContext.executeFetchRequest(request) as! [Users]
+                        results[0].faceid = result["gid"].stringValue
+                        do {
+                            try manageObjectContext.save()
+                            faceid = result["gid"].stringValue
+                            let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
+                            
+                            if(!NSFileManager().fileExistsAtPath(plistPath)){
+                                let dict = NSMutableDictionary()
+                                dict.setObject(faceid, forKey: userid)
+                                dict.writeToFile(plistPath, atomically: true)
+                                //print(123)
+                            }else{
+                                let dict  = NSMutableDictionary(contentsOfFile: plistPath)
+                                dict!.setObject(faceid, forKey: userid)
+                                dict!.writeToFile(plistPath, atomically: true)
+                                //print(4556)
+                            }
+                            self.performSelectorOnMainThread(#selector(self.showResultInfo), withObject: "人脸信息采集成功", waitUntilDone: false)
+                        } catch  {
+                            print("Core Data Error!")
+                            self.performSelectorOnMainThread(#selector(self.showResultInfo), withObject: "系统异常，请稍后再试", waitUntilDone: false)
+                        }
+                    }catch{
+                        print("Core Data Error!")
                     }
-                    self.performSelectorOnMainThread(#selector(showResultInfo), withObject: "人脸信息采集成功", waitUntilDone: false)
-                } catch  {
-                    print("Core Data Error!")
-                    self.performSelectorOnMainThread(#selector(showResultInfo), withObject: "系统异常，请稍后再试", waitUntilDone: false)
-                }
-            }catch{
-                print("Core Data Error!")
-            }
 
+                }else{
+                    self.performSelectorOnMainThread(#selector(self.showResultInfo), withObject: "系统异常，请稍后再试", waitUntilDone: false)
+                }
+            }
+            
         }
     }
     

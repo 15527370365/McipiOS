@@ -1421,7 +1421,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.net.syzc.McipNews;
 				PRODUCT_NAME = "校园微平台";
-				PROVISIONING_PROFILE = "f30cdbca-6908-456d-b292-c497bf47cd09";
+				PROVISIONING_PROFILE = "287417d1-c4b9-43d7-9199-57241ad596b6";
 				PROVISIONING_PROFILE_SPECIFIER = McipNews;
 				SWIFT_OBJC_BRIDGING_HEADER = "McipNews/Common/Other/McipNews-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

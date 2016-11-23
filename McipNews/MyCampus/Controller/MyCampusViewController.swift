@@ -39,7 +39,7 @@ class MyCampusViewController: UIViewController {
     
     // MARK: - init function
     func setAdLoop(){
-        let frame = CGRectMake(0, 64, view.bounds.width, 180)
+        let frame = CGRectMake(0, 64, view.bounds.width, 170)
         let imageView = ["mycampus1.png","mycampus2.png","mycampus3.png"]
         let loopView = XHAdLoopView(frame: frame, images: imageView, autoPlay: true, delay: 3, isFromNet: false)
         loopView.delegate = self

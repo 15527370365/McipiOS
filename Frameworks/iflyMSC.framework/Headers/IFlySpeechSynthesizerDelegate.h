@@ -44,9 +44,11 @@
 /**
  *  播放进度回调
  *
- *  @param progress 播放进度，0-100
+ *  @param progress 当前播放进度，0-100
+ *  @param beginPos 当前播放文本的起始位置，0-100
+ *  @param endPos 当前播放文本的结束位置，0-100
  */
-- (void) onSpeakProgress:(int) progress;
+- (void) onSpeakProgress:(int) progress beginPos:(int)beginPos endPos:(int)endPos;
 
 /**
  *  暂停播放回调

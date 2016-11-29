@@ -59,10 +59,10 @@ class VerifyViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         self.iFlySpFaceRequest?.setParameter(IFlySpeechConstant.FACE_VERIFY(), forKey: IFlySpeechConstant.FACE_SST())
         self.iFlySpFaceRequest?.setParameter("57899eda", forKey: IFlySpeechConstant.APPID())
-        self.iFlySpFaceRequest?.setParameter("1309030404", forKey: "auth_id")
+        self.iFlySpFaceRequest?.setParameter(userid, forKey: IFlySpeechConstant.MFV_AUTH_ID())
         self.iFlySpFaceRequest?.setParameter("del", forKey: "property")
-        self.iFlySpFaceRequest?.setParameter(
-            faceid, forKey: IFlySpeechConstant.FACE_GID())
+//        self.iFlySpFaceRequest?.setParameter(
+//            faceid, forKey: IFlySpeechConstant.FACE_GID())
         self.iFlySpFaceRequest?.setParameter("2000", forKey: "wait_time")
         //  压缩图片大小
         if let imgData = imageView.image  {

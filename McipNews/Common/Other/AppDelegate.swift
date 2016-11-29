@@ -56,9 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 token=user.token!
                 image = user.image!
                 password = user.password!
-                if let id = user.faceid{
-                    faceid = id
-                }
+//                if let id = user.faceid{
+//                    faceid = id
+//                }
                 
             }
             if results?.count != 0 {
@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     self.window?.rootViewController=storyboard.instantiateViewControllerWithIdentifier("MainTabBar")
                     NSLog("token:%@", token)
-                    print("faceid"+faceid)
+                    //print("faceid"+faceid)
                 }
             }
         }catch{

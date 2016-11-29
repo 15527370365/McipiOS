@@ -521,6 +521,22 @@ struct DataTool {
             }
         }
     }
+    static func loadUserState(completionHandler:(ustate:NSNumber)->Void){
+        let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]
+        let parameters = ["path":"users?select=ustate&userid=eq."+userid+""]
+        //print(parameters)
+        let json = fetchJsonFromNet(get, parameters, headers)
+        json.jsonToModel(nil) { result in
+            print(result)
+            if result["code"].string=="200" {
+                let data=JSON(data: result["data"].stringValue.dataUsingEncoding(NSUTF8StringEncoding)!)
+                //print(data)
+                completionHandler(ustate: data[0]["ustate"].intValue)
+            }else{
+                completionHandler(ustate: -99)
+            }
+        }
+    }
     
     static func makeSureNotice(noticeid:NSNumber,completionHandler:(flag:Bool)->Void){
         let headers = ["consumer_key": ALAMOFIRE_KEY,"userid":userid,"token":token]

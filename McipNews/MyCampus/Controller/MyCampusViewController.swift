@@ -161,26 +161,39 @@ extension MyCampusViewController : UICollectionViewDelegate,UICollectionViewData
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        self.hidesBottomBarWhenPushed=false
         
-        if faceid == ""{
-            let alertController = UIAlertController(title: "提示", message: "您当前并未进行人脸信息采集，请前往左上角的个人中心进行人脸信息采集", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.Default, handler: nil))
-            
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }else{
-            if collectionView.tag == 200 && indexPath.row == 5{
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewControllerWithIdentifier("verify") as! VerifyViewController
-                vc.type = 1
-                //vc.rcid = returnResult.did
-//                let vc = ScanCodeViewController()
-//                vc.type = 1
-                self.hidesBottomBarWhenPushed=true
-                self.navigationController?.pushViewController(vc, animated: true)
-                self.hidesBottomBarWhenPushed=false
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.bezelView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        hud.label.text = "Loading"
+        DataTool.loadUserState() { result -> Void in
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
+            if result.integerValue == 2{
+                let alertController = UIAlertController(title: "提示", message: "您当前并未进行人脸信息采集，请前往左上角的个人中心进行人脸信息采集", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.Default, handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }else if result.integerValue == 0{
+                if collectionView.tag == 200 && indexPath.row == 5{
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewControllerWithIdentifier("verify") as! VerifyViewController
+                    vc.type = 1
+                    //vc.rcid = returnResult.did
+                    //                let vc = ScanCodeViewController()
+                    //                vc.type = 1
+                    self.hidesBottomBarWhenPushed=true
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.hidesBottomBarWhenPushed=false
+                }else{
+                    self.performSegueWithIdentifier("showDetail", sender: Collection(collectionView: collectionView,indexPath: indexPath))
+                }
             }else{
-                self.performSegueWithIdentifier("showDetail", sender: Collection(collectionView: collectionView,indexPath: indexPath))
+                let alertController = UIAlertController(title: "提示", message: "系统异常，请稍后再试！", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "确认", style: UIAlertActionStyle.Default, handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
             }
         }
+        
+        
     }
     
 }

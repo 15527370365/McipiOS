@@ -78,7 +78,7 @@ class CommonFunction: NSObject {
         }
         token = ""
         userid = ""
-        faceid = ""
+        //faceid = ""
         image = ""
         password = ""
         

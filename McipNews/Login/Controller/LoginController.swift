@@ -73,7 +73,7 @@ class LoginController: UIViewController {
                 if let jsonValue = response.result.value {
                     MBProgressHUD.hideHUDForView(self.view, animated: true)
                     let resultJSON=JSON(jsonValue)
-                    //print(resultJSON)
+                    print(resultJSON)
                     if resultJSON["code"].string=="30000" {
                         let appDelegate:AppDelegate=UIApplication.sharedApplication().delegate as! AppDelegate
                         let manageObjectContext = appDelegate.managedObjectContext
@@ -84,18 +84,18 @@ class LoginController: UIViewController {
                         user.exitTime=""
                         user.image=resultJSON["upic"].stringValue
                         user.password = self.passField.text!
-                        let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
-
-                        if(NSFileManager().fileExistsAtPath(plistPath)){
-                            let dict  = NSMutableDictionary(contentsOfFile: plistPath)
-                            //print(dict)
-                            //print(dict![self.userField.text!])
-                            if let face=dict!.objectForKey(self.userField.text!){
-                                //print(123)
-                                faceid = face as! String
-                                user.faceid = faceid
-                            }
-                        }
+//                        let plistPath = NSHomeDirectory() + "/Documents/faceid.plist"
+//
+//                        if(NSFileManager().fileExistsAtPath(plistPath)){
+//                            let dict  = NSMutableDictionary(contentsOfFile: plistPath)
+//                            //print(dict)
+//                            //print(dict![self.userField.text!])
+//                            if let face=dict!.objectForKey(self.userField.text!){
+//                                //print(123)
+//                                faceid = face as! String
+//                                user.faceid = faceid
+//                            }
+//                        }
                         //print(user.image)
                         do{
                             try manageObjectContext.save()
